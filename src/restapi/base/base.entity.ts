@@ -10,12 +10,11 @@ export enum STATUS {
   DEACTIVE = 'DEACTIVE',
 }
 
-
-export  abstract class BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+export abstract class BaseEntity {
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: 1 })
   st_id: number;
 
   @Column({

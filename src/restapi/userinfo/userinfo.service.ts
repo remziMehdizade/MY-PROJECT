@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserinfoDto } from './dto/create-userinfo.dto';
 import { UpdateUserinfoDto } from './dto/update-userinfo.dto';
+import { Userinfo } from './entities/userinfo.entity';
 
 @Injectable()
 export class UserinfoService {
+  constructor(
+    @InjectRepository(Userinfo) private UserInfoRepo: Repository<Userinfo>,
+  ) {}
+
   create(createUserinfoDto: CreateUserinfoDto) {
-    return 'This action adds a new userinfo';
+    const usr = this.UserInfoRepo.create(createUserinfoDto);
+    return this.UserInfoRepo.save(usr);
   }
 
   findAll() {

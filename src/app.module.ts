@@ -7,6 +7,7 @@ import { RoleModule } from './restapi/role/role.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './restapi/user/entities/user.entity';
+import { Userinfo } from './restapi/userinfo/entities/userinfo.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -18,7 +19,7 @@ import { User } from './restapi/user/entities/user.entity';
         username: 'root',
         password: '12345678',
         database: 'my-project',
-        entities: [User],
+        entities: [User,Userinfo],
         synchronize: true,
       }),
     }),
