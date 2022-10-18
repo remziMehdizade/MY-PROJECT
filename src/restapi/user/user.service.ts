@@ -13,6 +13,7 @@ export class UserService {
     @InjectRepository(Userinfo)
     private userinfoRepository: Repository<Userinfo>,
   ) {}
+
   async create(createUserDto: CreateUserDto) {
     const usri = new Userinfo();
     usri.adress = createUserDto.userInfo.adress;
@@ -27,7 +28,6 @@ export class UserService {
     usr.email = createUserDto.email;
     usr.password = createUserDto.password;
     usr.userInfo = usri;
-    
 
     return this.userRepository.save(usr);
   }
@@ -37,22 +37,54 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    const result= await this.userRepository.findOne({
+    const result = await this.userRepository.findOne({
       where: { id },
-      relations: { userInfo: true },///['userInfo'],
+      relations: { userInfo: true }, ///['userInfo'],
     });
 
-    if(!result){
-      throw new NotFoundException("User Not Found!!!!!!!1");
+    if (!result) {
+      throw new NotFoundException('User Not Found!!!!!!!1');
     }
     return result;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: { userInfo: true }, ///['userInfo'],
+    });
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    await this.userRepository.merge(user, {
+      password: updateUserDto.password,
+      userInfo: updateUserDto.userInfo,
+    });
+
+    const { adress, imageUrl, phone, country } = user.userInfo;
+    const userInf = await this.userinfoRepository.findOne({ where: { id } });
+
+    await this.userinfoRepository.merge(userInf, {
+      adress,
+      imageUrl,
+      phone,
+      country,
+    });
+
+    await this.userinfoRepository.save(userInf);
+    return await this.userRepository.save(user);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number): Promise<any> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: { userInfo: true }, ///['userInfo'],
+    });
+    await this.userRepository.delete(user.id);
+    await this.userinfoRepository.delete(user.userInfo.id);
+
+    return { msg: `This userId  ${id} user was deleted` };
   }
 }
