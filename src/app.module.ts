@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './restapi/user/entities/user.entity';
 import { Userinfo } from './restapi/userinfo/entities/userinfo.entity';
+import { PhotoModule } from './restapi/photo/photo.module';
+import { ProfileModule } from './restapi/profile/profile.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -19,13 +21,15 @@ import { Userinfo } from './restapi/userinfo/entities/userinfo.entity';
         username: 'root',
         password: '12345678',
         database: 'my-project',
-        entities: [User,Userinfo],
+        autoLoadEntities: true,//entities: [User,Userinfo],
         synchronize: true,
       }),
     }),
     UserModule,
     UserinfoModule,
     RoleModule,
+    PhotoModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
