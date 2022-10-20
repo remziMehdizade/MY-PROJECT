@@ -27,12 +27,9 @@ export class PhotoController {
   }
 
   @Get(':id/')
-  findOne(@Param('id', new ParseIntPipe()) id, @Param('name') name: string) {
+  findOne(@Param('id', new ParseIntPipe()) id) {
     return this.photoService.findOne(id);
   }
-
-
-  
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePhotoDto: UpdatePhotoDto) {
