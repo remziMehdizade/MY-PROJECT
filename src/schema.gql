@@ -1,0 +1,79 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Userinfo {
+  id: Int!
+  st_id: Int!
+  isactive: String!
+  adress: String!
+  imageUrl: String!
+  phone: String!
+  country: Int!
+}
+
+type User {
+  id: Int!
+  st_id: Int!
+  isactive: String!
+  username: String!
+  email: String!
+  password: String!
+}
+
+type Role {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  findAll: [User!]!
+  findOne(id: Int!): User!
+  role(id: Int!): Role!
+  userinfo(id: Int!): Userinfo!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createRole(createRoleInput: CreateRoleInput!): Role!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  removeRole(id: Int!): Role!
+  createUserinfo(createUserinfoInput: CreateUserinfoInput!): Userinfo!
+  updateUserinfo(updateUserinfoInput: UpdateUserinfoInput!): Userinfo!
+  removeUserinfo(id: Int!): Userinfo!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateUserinfoInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserinfoInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
